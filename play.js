@@ -77,14 +77,14 @@ var $ = document.querySelector.bind(document),
 					item.height = ground[index + 1].height;
 				} else {
 					var withVariation = noVary < 0,
-						variation = 4,
+						variation = withVariation ? 200 : 4,
 						diff = -variation / 2 + rand() * variation;
 					// make sure gap is a real gap
 					if (withVariation) {
 						if (diff > 0) {
-							diff += 10;
+							diff += 20;
 						} else {
-							diff -= 10;
+							diff -= 20;
 						}
 						// no variation for 10 cycles
 						noVary = noVaryBase + Math.floor(rand() * nextGapTileBase);

@@ -117,19 +117,19 @@ body.dress {
 }
 @-webkit-keyframes animateGwoek {
     from   {background-position: 0px; }
-    to {background-position: -42px; }
+    to {background-position: -390px; }
 }
 @keyframes animateGwoek {
     from   {background-position: 0px; }
-    to {background-position: -42px; }
+    to {background-position: -390px; }
 }
 
 #splash h2:after {
     content: "";
     display: inline-block;
-    width: 14px;
-    height: 22px;
-    background: url("Gwoek.png") no-repeat;
+    width: 65px;
+    height: 48px;
+    background: url("llama-white.png") no-repeat;
     margin-left: 10px;
     -webkit-animation: animateGwoek 0.5s steps(3) infinite;
     animation: animateGwoek 0.5s steps(3) infinite;
