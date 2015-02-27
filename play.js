@@ -151,11 +151,9 @@ var $ = document.querySelector.bind(document),
 				// GAME OVER
 				gameOver = true;
 				score = Math.floor(score);
-				ga('send', 'event', 'score', 'session', 'Score', score);
 				if (score > topScore) {
 					topScore = score;
 					_topScoreEl.innerHTML = "Top score: " + topScore;
-					ga('send', 'event', 'score', 'top', 'Top score', topScore);
 				}
 				setVisible(_gameOverEl, true);
 				setVisible(_dinoEl, false);
