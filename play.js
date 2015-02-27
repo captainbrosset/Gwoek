@@ -41,7 +41,6 @@ var $ = document.querySelector.bind(document),
 	_dinoEl = $("#dino"),
 	_scoreEl = $("#score"),
 	_topScoreEl = $("#topscore"),
-	_twitterEl = $("#twitter"),
 	_gameOverEl = $("#gameover"),
 	_splashEl = $("#splash"),
 
@@ -78,29 +77,24 @@ var $ = document.querySelector.bind(document),
 					item.height = ground[index + 1].height;
 				} else {
 					var withVariation = noVary < 0,
-						variation = withVariation ? 200 : 4,
+						variation = 4,
 						diff = -variation / 2 + rand() * variation;
 					// make sure gap is a real gap
 					if (withVariation) {
 						if (diff > 0) {
-							diff += 20;
+							diff += 10;
 						} else {
-							diff -= 20;
+							diff -= 10;
 						}
 						// no variation for 10 cycles
 						noVary = noVaryBase + Math.floor(rand() * nextGapTileBase);
 					}
 					item.height = Math.max(Math.min(item.height + diff, topLimit), bottomLimit);
 				}
-				var adjust = 1;
-				if (index > nbTiles * 4 / 5) {
-					adjust = (nbTiles - index) / (nbTiles / 5);
-				}
-				tile.style.height = adjust * item.height + "px";
-				tile.style.opacity = 0.5 + adjust / 2;
+				tile.style.height = item.height + "px";
 			}
 		});
-		
+
 		shift = shift + (10 * delta);
 		noVary = noVary - delta;
 
@@ -163,12 +157,9 @@ var $ = document.querySelector.bind(document),
 					_topScoreEl.innerHTML = "Top score: " + topScore;
 					ga('send', 'event', 'score', 'top', 'Top score', topScore);
 				}
-				_dinoEl.style.transform = "scale(1)";
 				setVisible(_gameOverEl, true);
 				setVisible(_dinoEl, false);
 				document.body.classList.add("gameover");
-				_twitterEl.href = "https://twitter.com/home?status=" +
-					encodeURIComponent("Just scored " + score + " on Gwoek! Challenge me on this track here: http://bbaliguet.github.io/Gwoek/#" + seed);
 				// 2s before restart with space
 				setTimeout(function () {
 					withSplash = true;
@@ -190,7 +181,6 @@ var $ = document.querySelector.bind(document),
 		var scale = playerOnFloor ? 1 : 1 + 1 / (Math.abs(playerAcceleration / 20) + 1);
 		_dinoEl.style.bottom = playerBottom + "px";
 		_dinoEl.style.left = playerLeft + "px";
-		_dinoEl.style.transform = "scale(" + scale + ")";
 
 		// adjust score
 		score = score + delta;
@@ -202,8 +192,8 @@ var $ = document.querySelector.bind(document),
 			newLevel = newLevel - delta;
 		}
 
-		// adjust sprite (4 phases, 14px width)
-		_dinoEl.style.backgroundPosition = "-" + (14 * (Math.floor(score / 9) % 4)) + "px 0px";
+		// adjust sprite (6 phases, 65px width)
+		_dinoEl.style.backgroundPosition = "-" + (65 * (Math.floor(score / 3) % 6)) + "px 0px";
 		_scoreEl.innerHTML = "score: " + Math.floor(score);
 
 		requestAnimationFrame(loop);
@@ -229,7 +219,7 @@ var $ = document.querySelector.bind(document),
 		gameOver = false;
 
 		// init ground
-		nbTiles = Math.floor(viewport.width / 20) + 2;
+		nbTiles = Math.floor(viewport.width / tileWidth) + 2;
 		_environmentEl.innerHTML = "";
 		ground.splice(0, ground.length);
 		for (var i = 0; i < nbTiles; i++) {
@@ -288,26 +278,21 @@ var $ = document.querySelector.bind(document),
 		} else {
 			if (playerOnFloor) {
 				playerOnFloor = false;
-				playerAcceleration = -20;
+				playerAcceleration = -25;
 				playerBottom += 10;
+				var theme = Math.random();
+				if (theme < 0.33) {
+					document.body.className = "dark";
+				} else if (theme < 0.66) {
+					document.body.className = "dress";
+				} else {
+					document.body.className = "";
+				}
 			} else {
 				playerDblJump = true;
-				playerAcceleration = -15;
-				if (darkColor || Math.random() < 0.5) {
-					darkColor = !darkColor;
-					var classList = document.body.classList;
-					if (darkColor) {
-						classList.add("dark");
-					} else {
-						classList.remove("dark");
-					}
-				}
+				playerAcceleration = -20;
 			}
 		}
-		// generate a random color
-		var color = Math.floor(Math.random() * 360),
-				light = darkColor ? "7%" : "80%";
-		document.body.style.backgroundColor = "hsl(" + color + ", 100%, " + light + ")";
 	};
 
 document.addEventListener("DOMContentLoaded", function (e) {

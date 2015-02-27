@@ -4,19 +4,29 @@ html {
     margin: 0;
     height: 100%;
     font-family: 'Press Start 2P', cursive;
+    overflow: hidden;
 }
 
 body {
-    background: hsl(0, 0%, 80%);
+    background: rgb(153, 195, 254);
     transition: background-color .3s;
+}
+
+body.dress {
+    background: url(rainbow.gif) repeat-y top left;
+    background-size: 100% auto;
 }
 
 .ground {
     position: absolute;
     bottom: 0;
-    width: 19px;
-    background: #151515;
-    box-shadow: 0px -6px 0px rgba(0,0,0,0.5);
+    width: 30px;
+    background: white;
+    border-radius: 5px 5px 0 0;
+}
+
+.dress .ground {
+    background: #333;
 }
 
 .cloud {
@@ -30,12 +40,6 @@ body {
                 49px 8px 0px -13px rgba(255, 255, 255, 0.4);
 }
 
-.dark .cloud {
-    width: 6px;
-    height: 6px;
-    box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.4);
-}
-
 #player {
     position: relative;
     width: 100%;
@@ -46,27 +50,19 @@ body {
 #dino {
     position: absolute;
     left: 125px;
-    width: 14px;
-    height: 27px;
+    width: 65px;
+    height: 48px;
     bottom: 100px;
     display: none;
-    background: url(Gwoek.png) no-repeat;
+    background: url(llama-white.png) no-repeat;
 }
 
 .dark #dino {
-    opacity: 0.5;
+    background: url(llama-black.png) no-repeat;
 }
 
-.dark #dino:before {
-    display: block;
-    position: absolute;
-    width: 29px;
-    height: 29px;
-    border-radius: 100%;
-    box-shadow: 0px 0px 30px rgba(256, 256, 256, 0.8);
-    content: "";
-    left: -6px;
-    top: -4px;
+.dress #dino {
+    background: url(dress.png) no-repeat;
 }
 
 #gameover,
